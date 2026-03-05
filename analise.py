@@ -35,6 +35,23 @@ def calcular_desempenho_casa_fora(df_jogos, qtd_jogos=10):
 
     return resultados
 
+def analisar_quatro_fatores(df_fatores):
+    dados = df_fatores.iloc[0]
+
+    resultados = {
+        "ataque_efg": round(dados['EFG_PCT'] * 100, 1),
+        "defesa_efg": round(dados['OPP_EFG_PCT'] * 100, 1),
+
+        "ataque_tov": round(dados['TM_TOV_PCT'] * 100, 1),
+        "defesa_tov": round(dados['OPP_TOV_PCT'] * 100, 1),
+
+        "ataque_orb": round(dados['OREB_PCT'] * 100, 1),
+
+        "ataque_ftr": round(dados['FTA_RATE'] * 100, 1)
+    }
+
+    return resultados
+
 if __name__ == "__main__":
     print("Testando a análise de dados...")
    

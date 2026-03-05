@@ -12,9 +12,11 @@ def gerar_relatorio():
 
     try:
         df_jogos = coleta.buscar_jogos_time(time_alvo)
+        df_fatores = coleta.buscar_quatro_fatores(time_alvo)
 
         medias_gerais = analise.calcular_medias_recentes(df_jogos, qtd_jogos=5)
         desempenho_cf = analise.calcular_desempenho_casa_fora(df_jogos, qtd_jogos=10)
+        fatores = analise.analisar_quatro_fatores(df_fatores)
 
         print("\n" + "="*50)
         print(f"Relatório de desempenho para {time_alvo}")
@@ -24,6 +26,12 @@ def gerar_relatorio():
         print(f"   • Pontos Marcados: {medias_gerais['pontos']} pts/jogo")
         print(f"   • Rebotes: {medias_gerais['rebotes']} reb/jogo")
         print(f"   • Assistências: {medias_gerais['assistencias']} ast/jogo")
+
+        print(f"\nQuatro Fatores (temporada):")
+        print(f"   • Arremesso (eFG%): Ataque {fatores['ataque_efg']}% | Permite {fatores['defesa_efg']}%")
+        print(f"   • Desperdícios (TOV%): Comete {fatores['ataque_tov']}% | Força {fatores['defesa_tov']}%")
+        print(f"   • Rebotes Ofensivos (ORB%): Captura {fatores['ataque_orb']}% das bolas perdidas")
+        print(f"   • Faltas Cavadas (FT Rate): {fatores['ataque_ftr']}% lances livres x arremesso")
 
         print(f"\nFator mando de quadra (Últimos {desempenho_cf['recorte_jogos']} jogos):")
         print(f"   • Jogos em casa analisados: {desempenho_cf['jogos_casa_analisados']} jogos): {desempenho_cf['media_pontos_casa']} pts/jogo")

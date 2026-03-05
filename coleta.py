@@ -1,5 +1,6 @@
 from nba_api.stats.static import teams
 from nba_api.stats.endpoints import teamgamelog
+from nba_api.stats.endpoints import teamdashboardbygeneralsplits
 import pandas as pd
 
 def buscar_jogos_time(nome_time):
@@ -14,6 +15,25 @@ def buscar_jogos_time(nome_time):
     df_jogos = gamelog.get_data_frames()[0]
 
     return df_jogos
+
+def buscar_quatro_fatores(nome_time):
+    nba_teams = teams.get_teams()
+    time_encontrado = [team for team in nba_teams if team['full_name'].lower() == nome_time.lower()]
+
+    if not time_encontrado:
+        raise ValueError(f"Time '{nome_time}' não encontrado na API.")
+    
+    time_id = time_encontrado[0]['id']
+
+    dashboard = teamdashboardbygeneralsplits.TeamDashboardByGeneralSplits(
+        team_id=time_id,
+        measure_type_detailed_defense='Four Factors'
+        )
+    
+    df_fatores = dashboard.get_data_frames()[0]
+
+    return df_fatores
+
 
 if __name__ == "__main__":
     print("Testando a coleta de dados...")
