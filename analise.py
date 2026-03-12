@@ -1,57 +1,61 @@
 import pandas as pd
 
-def calcular_medias_recentes(df_jogos, qtd_jogos=5):
+def calcular_medias_gerais(df_jogos, qtd_jogos=10):
+    pts_temp = df_jogos['PTS'].mean()
+    reb_temp = df_jogos['REB'].mean()
+    ast_temp = df_jogos['AST'].mean()
+    
     ultimos_jogos = df_jogos.head(qtd_jogos)
-
-    media_pontos = ultimos_jogos['PTS'].mean()
-    media_rebotes = ultimos_jogos['REB'].mean()
-    media_assistencias = ultimos_jogos['AST'].mean()
-
-    resultados = {
+    pts_rec = ultimos_jogos['PTS'].mean()
+    reb_rec = ultimos_jogos['REB'].mean()
+    ast_rec = ultimos_jogos['AST'].mean()
+    
+    return {
+        "jogos_temporada": len(df_jogos),
         "recorte_jogos": qtd_jogos,
-        "pontos": round(media_pontos, 1),
-        "rebotes": round(media_rebotes, 1),
-        "assistencias": round(media_assistencias, 1)
+        "pts_temp": round(pts_temp, 1),
+        "reb_temp": round(reb_temp, 1),
+        "ast_temp": round(ast_temp, 1),
+        "pts_rec": round(pts_rec, 1),
+        "reb_rec": round(reb_rec, 1),
+        "ast_rec": round(ast_rec, 1)
     }
 
-    return resultados
 
-def calcular_desempenho_casa_fora(df_jogos, qtd_jogos=10):
+def calcular_desempenho_casa_fora_completo(df_jogos, qtd_jogos=10):
+    casa_temp = df_jogos[df_jogos['MATCHUP'].str.contains('vs.')]
+    fora_temp = df_jogos[df_jogos['MATCHUP'].str.contains('@')]
+    
     ultimos_jogos = df_jogos.head(qtd_jogos)
-
-    jogos_casa = ultimos_jogos[ultimos_jogos['MATCHUP'].str.contains('vs.')]
-    jogos_fora = ultimos_jogos[ultimos_jogos['MATCHUP'].str.contains('@')]
-
-    media_casa = jogos_casa['PTS'].mean() if not jogos_casa.empty else 0
-    media_fora = jogos_fora['PTS'].mean() if not jogos_fora.empty else 0
-
-    resultados = {
+    casa_rec = ultimos_jogos[ultimos_jogos['MATCHUP'].str.contains('vs.')]
+    fora_rec = ultimos_jogos[ultimos_jogos['MATCHUP'].str.contains('@')]
+    
+    def extrair_medias(df):
+        if df.empty: return 0, 0, 0, 0
+        return len(df), round(df['PTS'].mean(), 1), round(df['REB'].mean(), 1), round(df['AST'].mean(), 1)
+        
+    qtd_c_t, pts_c_t, reb_c_t, ast_c_t = extrair_medias(casa_temp)
+    qtd_f_t, pts_f_t, reb_f_t, ast_f_t = extrair_medias(fora_temp)
+    qtd_c_r, pts_c_r, reb_c_r, ast_c_r = extrair_medias(casa_rec)
+    qtd_f_r, pts_f_r, reb_f_r, ast_f_r = extrair_medias(fora_rec)
+    
+    return {
         "recorte_jogos": qtd_jogos,
-        "jogos_casa_analisados": len(jogos_casa),
-        "media_pontos_casa": round(media_casa, 1),
-        "jogos_fora_analisados": len(jogos_fora),
-        "media_pontos_fora": round(media_fora, 1)
+        "temp_casa": {"qtd": qtd_c_t, "pts": pts_c_t, "reb": reb_c_t, "ast": ast_c_t},
+        "temp_fora": {"qtd": qtd_f_t, "pts": pts_f_t, "reb": reb_f_t, "ast": ast_f_t},
+        "rec_casa": {"qtd": qtd_c_r, "pts": pts_c_r, "reb": reb_c_r, "ast": ast_c_r},
+        "rec_fora": {"qtd": qtd_f_r, "pts": pts_f_r, "reb": reb_f_r, "ast": ast_f_r}
     }
 
-    return resultados
 
 def analisar_quatro_fatores(df_fatores):
     dados = df_fatores.iloc[0]
-
-    resultados = {
+    
+    return {
         "ataque_efg": round(dados['EFG_PCT'] * 100, 1),
         "defesa_efg": round(dados['OPP_EFG_PCT'] * 100, 1),
-
         "ataque_tov": round(dados['TM_TOV_PCT'] * 100, 1),
-        "defesa_tov": round(dados['OPP_TOV_PCT'] * 100, 1),
-
+        "defesa_tov": round(dados['OPP_TOV_PCT'] * 100, 1), 
         "ataque_orb": round(dados['OREB_PCT'] * 100, 1),
-
         "ataque_ftr": round(dados['FTA_RATE'] * 100, 1)
     }
-
-    return resultados
-
-if __name__ == "__main__":
-    print("Testando a análise de dados...")
-   

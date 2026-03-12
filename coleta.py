@@ -34,6 +34,21 @@ def buscar_quatro_fatores(nome_time):
 
     return df_fatores
 
+def buscar_quatro_fatores_recentes(nome_time, ultimos_n="10"):
+    nba_teams = teams.get_teams()
+    time_encontrado = [team for team in nba_teams if team['full_name'].lower() == nome_time.lower()]
+    if not time_encontrado:
+        raise ValueError(f"Time '{nome_time}' não encontrado na API.")
+    time_id = time_encontrado[0]['id']
+    dashboard = teamdashboardbygeneralsplits.TeamDashboardByGeneralSplits(
+        team_id=time_id,
+        measure_type_detailed_defense='Four Factors',
+        last_n_games=ultimos_n
+        )
+    
+    df_fatores_recentes = dashboard.get_data_frames()[0]
+    return df_fatores_recentes
+
 
 if __name__ == "__main__":
     print("Testando a coleta de dados...")
