@@ -1,41 +1,43 @@
-# NBA Stats Analyzer: Advanced Model
+# Analisador de tendências de jogos da NBA 
 
-Um analisador de dados esportivos focado na NBA, construído em Python. Este projeto consome dados brutos da API oficial da NBA (`nba_api`) e processa estatísticas avançadas para identificar tendências de desempenho, contrastando a linha base da temporada com o momento recente das equipes.
+Um painel interativo (Dashboard) focado em dados esportivos avançados da NBA, desenvolvido em Python. O sistema consome dados brutos da API oficial da liga e processa estatísticas complexas para identificar tendências de desempenho, contrastando a linha base da temporada com o momento recente das equipes.
 
 ## Arquitetura do Projeto
 
-O projeto foi construído utilizando o conceito de separação de responsabilidades (Modularização), dividido em três componentes principais:
+O projeto adota o padrão de separação de responsabilidades (Modularização), estruturado em três componentes principais:
 
-* **`coleta.py` (O Operário):** Responsável por fazer as requisições à API da NBA, buscar o ID das franquias e retornar os DataFrames brutos (jogos gerais e recortes de *Four Factors*).
-* **`analise.py` (O Cérebro):** Módulo de processamento de dados usando Pandas. Limpa os dados, aplica filtros de texto (Casa/Fora) e calcula médias móveis e estatísticas avançadas.
-* **`main.py` (O Maestro):** O ponto de entrada da aplicação. Orquestra a coleta e a análise, exibindo um *Dashboard* formatado e interativo no terminal.
+* **coleta.py (Data Fetching):** Módulo encarregado de realizar requisições à biblioteca `nba_api`, capturando IDs oficiais e retornando DataFrames brutos (jogos gerais e métricas avançadas).
+* **analise.py (Data Processing):** Módulo de processamento utilizando Pandas. Realiza a limpeza dos dados, aplica filtros de mando de quadra e calcula médias móveis e estatísticas avançadas.
+* **app.py (Web Interface):** Front-end desenvolvido em Streamlit. Utiliza o conceito de Session State para navegação fluida e renderiza os indicadores em formato de KPI Cards e Tabelas limpas, de forma totalmente responsiva.
 
-## Estatísticas Implementadas
+## Funcionalidades e Métricas
 
-Em vez de focar apenas no placar, este modelo analisa o "DNA" das equipes através de:
+A aplicação substitui a leitura básica de placares por uma análise do DNA estatístico das franquias através de:
 
-1.  **Espelho de Desempenho (Baseline vs Trend):** Compara as médias da temporada inteira com o recorte dos últimos 10 jogos (redução de variância).
-2.  **Fator Mando de Quadra (Home/Away Split):** Isola o desempenho de pontos, rebotes e assistências em casa (`vs.`) e fora (`@`).
-3.  **Os Quatro Fatores de Dean Oliver (Four Factors):**
-    * **eFG% (Effective Field Goal):** Eficiência real de arremesso.
-    * **TOV% (Turnover Percentage):** Taxa de desperdício de posses.
+1. **Seleção Visual:** Painel interativo com os 30 escudos oficiais das franquias da NBA, atualizados dinamicamente via CDN.
+2. **Espelho de Desempenho (Baseline vs Trend):** Comparativo direto das médias da temporada completa contra o recorte dos últimos 10 jogos, permitindo a detecção de variações de performance (redução de variância).
+3. **Fator Mando de Quadra (Home/Away Split):** Isolamento métrico do desempenho de pontos, rebotes e assistências em casa e fora.
+4. **Os Quatro Fatores de Dean Oliver (Four Factors):**
+    * **eFG% (Effective Field Goal):** Eficiência real de arremesso, ajustando o peso das bolas de 3 pontos.
+    * **TOV% (Turnover Percentage):** Taxa de desperdício de posses de bola.
     * **ORB% (Offensive Rebound):** Taxa de rebotes ofensivos capturados.
-    * **FT Rate (Free Throw Rate):** Frequência de lances livres cavados.
+    * **FT Rate (Free Throw Rate):** Frequência de idas à linha de lance livre.
 
-## Como Executar
+## Como Executar Localmente
 
 ### Pré-requisitos
-Certifique-se de ter o Python 3 instalado e instale as dependências listadas no `requirements.txt`:
+Certifique-se de ter o Python 3 instalado. É recomendado o uso de um ambiente virtual (venv). Instale as dependências listadas no `requirements.txt`:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### Executando o Dashboard
-No seu terminal, rode o arquivo principal e digite o nome da franquia desejada:
+(Nota: Certifique-se de que as bibliotecas pandas, nba_api e streamlit estão declaradas no seu arquivo requirements.txt).
 
+### Executando a Aplicação Web
+No terminal, dentro do diretório do projeto, execute o comando do Streamlit:
 ```bash
-python main.py
+streamlit run app.py
 ```
 
-Desenvolvido para estudos em Engenharia de Dados e Análise Estatística Esportiva.
+O aplicativo abrirá automaticamente no seu navegador padrão (geralmente na porta 8501).
