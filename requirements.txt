@@ -1,3 +1,4 @@
 pandas
 nba_api
 streamlit
+altair<5
