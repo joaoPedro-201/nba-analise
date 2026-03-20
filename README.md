@@ -42,8 +42,6 @@ streamlit run app.py
 
 O aplicativo abrirá automaticamente no seu navegador padrão (geralmente na porta 8501).
 
-## Fonte de Dados e Creditos
+## Fonte de Dados e Créditos
 
-Os dados estatisticos brutos consumidos por este painel sao extraidos em tempo real utilizando a biblioteca open-source [nba_api](https://github.com/swar/nba_api), um cliente Python nao-oficial para os endpoints web da NBA (stats.nba.com). 
-
-Agradecimentos a comunidade open-source por manter os endpoints mapeados e acessiveis para fins de estudo e analise de dados esportivos.
+Os dados estatísticos brutos consumidos por este painel sao extraídos em tempo real utilizando a biblioteca open-source [nba_api](https://github.com/swar/nba_api), um cliente Python nao-oficial para os endpoints web da NBA (stats.nba.com). 
