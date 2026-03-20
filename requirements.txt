@@ -1,4 +1,3 @@
 pandas
 nba_api
-streamlit
-altair<5
+streamlit>=1.40.0
