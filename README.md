@@ -6,7 +6,7 @@ Um painel interativo (Dashboard) focado em dados esportivos avançados da NBA, d
 
 O projeto está hospedado e operando em nuvem. Você pode interagir com o dashboard diretamente pelo seu navegador, sem necessidade de instalações:
 
-**Acessar o Dashboard Live:** [https://nba-trends-dashboard.streamlit.app/]
+**Acessar o Dashboard Live:** [Site](https://nba-trends-dashboard.streamlit.app/)
 
 ## Arquitetura do Projeto
 
@@ -45,4 +45,4 @@ Caso queira clonar o repositório para estudos ou melhorias:
     ```
 
 ## Fonte de Dados e Créditos
-Os dados estatísticos brutos consumidos por este painel são extraídos em tempo real utilizando a biblioteca open-source nba_api, um cliente Python não-oficial para os endpoints web da NBA (https://www.google.com/search?q=stats.nba.com). Agradecimentos à comunidade open-source por manter os endpoints mapeados e acessíveis para análise de dados esportivos.
+Os dados estatísticos brutos consumidos por este painel são extraídos em tempo real utilizando a biblioteca open-source nba_api, um cliente Python não-oficial para os endpoints web da NBA. Agradecimentos à comunidade open-source por manter os endpoints mapeados e acessíveis para análise de dados esportivos.
